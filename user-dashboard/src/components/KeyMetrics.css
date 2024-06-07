@@ -1,0 +1,16 @@
+.metric-card {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .metric-card .card-title {
+    font-size: 1.5rem;
+  }
+  
+  .metric-card .card-text {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
