@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    background-color: #282c34;
+    padding: 20px;
+    color: white;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+  
+  p {
+    font-size: 1.2em;
+  }
+  
+
+/* Existing styles */
+
+.app-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sideBar {
+  width: 250px;
+  background-color: #f8f9fa; /* Adjust as needed */
+  border-right: 1px solid #ddd; /* Optional border */
+}
+
+.main-content {
+  flex-grow: 1;
+  background-color: #4698CB; /* Background color for main content */
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Content box styles */
+.content-box {
+  background-color: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 425px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensure elements are spaced out */
+}
+
+/* Styles for smaller boxes */
+.content-box-small {
+  height: 200px;
+}
+
+
+
+
+.us-map-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 50%; /* Aspect ratio adjustment */
+  overflow: hidden;
+}
+
+.us-map-container svg  {
+  position: absolute;
+  top: 0;
+  left: -5%; /* Move the SVG to the left */
+  width: 80%; /* Make the SVG slightly smaller */
+  height: 100%;
+}
+
+.popup {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+}
+
