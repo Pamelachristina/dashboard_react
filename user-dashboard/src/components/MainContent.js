@@ -1,6 +1,7 @@
 import React from 'react';
 import StatsCard from './StatsCard';
 import USMap from './USMap'; // Import the USMap component
+import globe from '../assets/globe.svg'; // Adjust the path if needed
 
 const MainContent = () => {
     return (
@@ -34,7 +35,7 @@ const MainContent = () => {
                         <p className="h4 font-weight-bold mb-2">Serving</p>
                         <p className="display-4 font-weight-bold mb-2">26</p>
                         <p className="h4 font-weight-bold mb-4">Countries</p>
-                        <img src="https://placehold.co/100x100/png?text=Globe" alt="Globe icon representing worldwide service" className="w-25 h-25" />
+                        <img src={globe} alt="Globe icon representing worldwide service" className="large-image-globe" />
                     </div>
                 </div>
                 <div className="row mb-4">
