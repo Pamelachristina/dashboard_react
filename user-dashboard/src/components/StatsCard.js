@@ -1,12 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const StatsCard = ({ title, value }) => {
     return (
-        <div className="bg-white shadow-sm text-dark">
-            <h3 className="text-muted mb-2">{title}</h3>
-            <p className="display-3 font-weight-bold">{value}</p>
+        <div className="stats-card">
+            <div className="stats-card-title">{title}</div>
+            <div className="stats-card-value">{value}</div>
         </div>
     );
-}
+};
+
+StatsCard.propTypes = {
+    title: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+};
 
 export default StatsCard;
+
