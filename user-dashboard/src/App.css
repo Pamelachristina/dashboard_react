@@ -41,6 +41,7 @@ p {
 .content-box {
   background-color: #C4C4C4;
   padding: 16px;
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: 425px;
   display: flex;
@@ -72,10 +73,11 @@ p {
 .popup {
   position: absolute;
   background: white;
-  box-shadow: 20px 20px 50px 10px #F0B323 inset;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
   pointer-events: none;
   transform: translate(-50%, -100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 10; /* Ensure popup appears above other elements */
 }
 
