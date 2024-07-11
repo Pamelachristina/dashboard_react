@@ -24,6 +24,7 @@ const SideBar = () => {
         <ul>
           <li className="mb-2">
             <NavLink
+              exact
               to="/"
               className={({ isActive }) => {
                 console.log("NavLink to / isActive:", isActive);
@@ -41,6 +42,16 @@ const SideBar = () => {
               }
             >
               <i className="fas fa-users mr-2"></i> User Stats
+            </NavLink>
+          </li>
+          <li className="mb-2">
+            <NavLink
+              to="/user-trends-and-insights"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
+              <i className="fas fa-chart-line mr-2"></i> User Trends and Insights
             </NavLink>
           </li>
           <li className="mb-2">

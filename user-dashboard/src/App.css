@@ -32,37 +32,8 @@ p {
   width: 250px;
   background-color: #f8f9fa; /* Adjust as needed */
   border-right: 1px solid #ddd; /* Optional border */
-  padding: 20px;
 }
 
-.sideBar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sideBar li {
-  margin: 10px 0;
-}
-
-.sideBar .nav-link {
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  align-items: center;
-}
-
-.sideBar .nav-link i {
-  margin-right: 10px;
-}
-
-.sideBar .nav-link:hover {
-  text-decoration: underline;
-}
-
-.active {
-  font-weight: bold;
-  color: blue;
-}
 
 /* Style for the stats cards */
 .stats-card {
@@ -78,7 +49,7 @@ p {
 
 .stats-card-title {
   font-size: 1.5em; /* Adjust the font size */
-  font-weight: 450;
+  font-weight: 300;
   margin-bottom: -15px;
 }
 
@@ -98,6 +69,7 @@ p {
 .content-box {
   background-color: #C4C4C4;
   padding: 16px;
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: 425px;
   display: flex;
@@ -137,46 +109,61 @@ p {
   z-index: 10; /* Ensure popup appears above other elements */
 }
 
+
+
 .globe-container {
-  width: 100%; /* Make container take full width */
+  position: relative;
   display: flex;
-  justify-content: center; /* Center the image horizontally */
-  align-items: center; /* Center the image vertically */
-  padding: 20px; /* Add some padding */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%; /* Make sure the container takes up the full height */
+}
+
+
+.globe-container img {
+  position: absolute;
+  top: 140%;
+  transform: translate(-23%, -50%);
+  width: 550%; /* Increase the width significantly to make the globe larger */
+  height: auto; /* Maintain aspect ratio */
 }
 
 .large-image-globe {
-  max-width: 100%; /* Make sure it scales within its container */
-  height: auto; /* Maintain aspect ratio */
-  width: 100%; /* Adjust the width as needed, could be in percentage or fixed value */
-}
-
-
-
-.h4.font-weight-bold.mb-2,
-.display-4.font-weight-bold.mb-2,
-.h4.font-weight-bold.mb-4 {
-  color: #041C2C;
-  font-size: 30px;
   position: absolute;
-  z-index: 1;
+  top: 85%;
+  transform: translate(-23%, -49%);
+  width: 150%; /* Increase the width significantly to make the globe larger */
+  height: auto; /* Maintain aspect ratio */
+  z-index: 1; /* Ensure it doesn't interfere with other elements */
 }
 
 .h4.font-weight-bold.mb-2 {
+  color: #041C2C;
+  font-size: 30px;
+  position: absolute;
   top: 90%;
   transform: translate(-35%, -1675%);
+  z-index: 1;
 }
 
 .display-4.font-weight-bold.mb-2 {
+  color: #041C2C;
   font-size: 40px;
   font-weight: bolder;
+  position: absolute;
   top: 90%;
   transform: translate(100%, -1270%);
+  z-index: 1;
 }
 
 .h4.font-weight-bold.mb-4 {
-  font-weight: bolder;
+  color: #041C2C;
+  font-weight:bolder;
   font-size: 40px;
+  position: absolute;
   top: 90%;
   transform: translate(0%, -1200%);
+  z-index: 1;
 }

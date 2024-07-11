@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import StatsCard from "../components/StatsCard"; // Ensure the path is correct
-import USMap from "../components/USMap"; // Ensure the path is correct
-import globe from "../assets/globe.svg"; // Adjust the path if needed
+import StatsCard from "../components/StatsCard";
+import USMap from "../components/USMap";
+import globe from "../assets/globe.svg";
 
 const Overview = () => {
   const [stats, setStats] = useState({
@@ -103,3 +103,5 @@ const Overview = () => {
 };
 
 export default Overview;
+
+

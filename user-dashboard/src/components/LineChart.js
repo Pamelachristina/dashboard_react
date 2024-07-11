@@ -1,15 +1,15 @@
 import React from 'react';
 
-const BarChart = ({ data }) => {
+const LineChart = ({ data }) => {
   // For debugging, log the data
-  console.log('BarChart data:', data);
+  console.log('LineChart data:', data);
   
   return (
     <div>
       {/* Placeholder content */}
-      <p>Bar Chart Placeholder</p>
+      <p>Line Chart Placeholder</p>
     </div>
   );
 };
 
-export default BarChart;
+export default LineChart;
