@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import StatsCard from "../components/StatsCard";
 import USMap from "../components/USMap";
 import globe from "../assets/globe.svg";
@@ -14,30 +13,19 @@ const Overview = () => {
   });
 
   useEffect(() => {
-    const endpoint = "/api/v1/UserStatistics"; // Relative URL because of proxy
+    // Use mock data instead of making an API call
+    const mockData = {
+      totalUsers: "100",
+      onSiteUsers: "60",
+      remoteUsers: "40",
+      minorityInstitutions: "10",
+      countriesServed: "5",
+    };
 
-    axios
-      .get(endpoint)
-      .then((response) => {
-        const data = response.data;
-        setStats({
-          totalUsers: String(data.totalUsers),
-          onSiteUsers: String(data.onSiteUsers),
-          remoteUsers: String(data.remoteUsers),
-          minorityInstitutions: String(data.minorityInstitutions),
-          countriesServed: String(data.countriesServed),
-        });
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-        setStats({
-          totalUsers: "Error",
-          onSiteUsers: "Error",
-          remoteUsers: "Error",
-          minorityInstitutions: "Error",
-          countriesServed: "Error",
-        });
-      });
+    // Simulate an API call delay
+    setTimeout(() => {
+      setStats(mockData);
+    }, 1000);
   }, []);
 
   return (
@@ -103,5 +91,3 @@ const Overview = () => {
 };
 
 export default Overview;
-
-
