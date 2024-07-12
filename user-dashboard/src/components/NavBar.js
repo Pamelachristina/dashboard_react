@@ -37,7 +37,6 @@ const NavBar = () => {
               User Trends and Insights
             </NavLink>
           </li>
-          
           <li className="nav-item">
             <NavLink className="nav-link" to="/charts">
               Charts

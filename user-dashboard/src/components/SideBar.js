@@ -1,3 +1,5 @@
+// src/components/SideBar.js
+
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -91,3 +93,4 @@ const SideBar = () => {
 };
 
 export default SideBar;
+

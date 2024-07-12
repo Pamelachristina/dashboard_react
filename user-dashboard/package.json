@@ -27,8 +27,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
+ 
   "eslintConfig": {
+    "proxy": "https://foundry-reviews.dev.lbl.gov",
     "extends": [
       "react-app",
       "react-app/jest"

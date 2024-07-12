@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import StatsCard from "../components/StatsCard";
 import USMap from "../components/USMap";
-import globe from "../assets/globe.svg";
+import Globe from "../components/Globe"; // Import the new Globe component
 
 const Overview = () => {
   const [stats, setStats] = useState({
@@ -13,21 +14,25 @@ const Overview = () => {
   });
 
   useEffect(() => {
-    // Use mock data instead of making an API call
-    const mockData = {
-      totalUsers: "100",
-      onSiteUsers: "60",
-      remoteUsers: "40",
-      minorityInstitutions: "10",
-      countriesServed: "5",
+    // Define the async function inside useEffect
+    const fetchStats = async () => {
+      try {
+        // Make the GET request using a CORS proxy
+        const response = await axios.get('https://cors-anywhere.herokuapp.com/https://foundry-reviews.dev.lbl.gov/api/user-program-stats');
+        
+        // Update state with the response data
+        setStats(response.data);
+      } catch (error) {
+        // Handle errors if the request fails
+        console.error('Failed to fetch stats:', error);
+        // Optionally, you can set an error state or default values
+      }
     };
 
-    // Simulate an API call delay
-    setTimeout(() => {
-      setStats(mockData);
-    }, 1000);
-  }, []);
-
+    // Call the async function
+    fetchStats();
+  }, []); // Empty dependency array means this effect runs once when the component mount
+  
   return (
     <div className="main-content">
       <div className="container-fluid">
@@ -66,11 +71,7 @@ const Overview = () => {
             </p>
             <p className="h4 font-weight-bold mb-4">Countries</p>
             <div className="globe-container">
-              <img
-                src={globe}
-                alt="Globe icon representing worldwide service"
-                className="large-image-globe"
-              />
+              <Globe /> {/* Replace the image with the Globe component */}
             </div>
           </div>
         </div>
@@ -91,3 +92,6 @@ const Overview = () => {
 };
 
 export default Overview;
+
+
+
