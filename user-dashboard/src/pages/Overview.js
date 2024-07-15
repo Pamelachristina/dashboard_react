@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import StatsCard from "../components/StatsCard";
 import USMap from "../components/USMap";
-import Globe from "../components/Globe"; // Import the new Globe component
+import CanvasGlobe from "../components/CanvasGlobe";
 
 const Overview = () => {
   const [stats, setStats] = useState({
@@ -10,29 +9,59 @@ const Overview = () => {
     onSiteUsers: "Loading...",
     remoteUsers: "Loading...",
     minorityInstitutions: "Loading...",
+    companies: "Loading...",
+    states: "Loading...",
     countriesServed: "Loading...",
   });
 
+  const [currentText, setCurrentText] = useState("");
+  const [isDropping, setIsDropping] = useState(false);
+
   useEffect(() => {
-    // Define the async function inside useEffect
     const fetchStats = async () => {
       try {
-        // Make the GET request using a CORS proxy
-        const response = await axios.get('https://cors-anywhere.herokuapp.com/https://foundry-reviews.dev.lbl.gov/api/user-program-stats');
-        
-        // Update state with the response data
-        setStats(response.data);
+        const dummyData = {
+          totalUsers: 100,
+          onSiteUsers: 60,
+          remoteUsers: 40,
+          minorityInstitutions: 10,
+          companies: 39,
+          states: 35,
+          countriesServed: 5,
+        };
+
+        setStats(dummyData);
+        setCurrentText(
+          `${dummyData.minorityInstitutions} Minority Serving Institutions`
+        );
       } catch (error) {
-        // Handle errors if the request fails
-        console.error('Failed to fetch stats:', error);
-        // Optionally, you can set an error state or default values
+        console.error("Failed to fetch stats:", error);
       }
     };
 
-    // Call the async function
     fetchStats();
-  }, []); // Empty dependency array means this effect runs once when the component mount
-  
+  }, []);
+
+  useEffect(() => {
+    const texts = [
+      `${stats.minorityInstitutions} Minority Serving Institutions`,
+      `${stats.companies} Companies`,
+      `in ${stats.states} States`,
+    ];
+    let index = 0;
+
+    const interval = setInterval(() => {
+      setIsDropping(true);
+      setTimeout(() => {
+        setCurrentText(texts[index]);
+        setIsDropping(false);
+        index = (index + 1) % texts.length;
+      }, 1000);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [stats]);
+
   return (
     <div className="main-content">
       <div className="container-fluid">
@@ -52,12 +81,13 @@ const Overview = () => {
             <div className="content-box d-flex">
               <div className="w-50">
                 <p className="text-dark">In fiscal year 2023 we served:</p>
-                <p className="display-4 font-weight-bold text-primary">
-                  {stats.minorityInstitutions}
-                </p>
-                <p className="h4 font-weight-bold text-dark">
-                  Minority Serving Institutions
-                </p>
+                <div
+                  className={`display-4 font-weight-bold text-primary ${
+                    isDropping ? "text-drop-out" : "text-drop-in"
+                  }`}
+                >
+                  {currentText}
+                </div>
               </div>
               <div className="w-50 d-flex">
                 <USMap />
@@ -71,7 +101,13 @@ const Overview = () => {
             </p>
             <p className="h4 font-weight-bold mb-4">Countries</p>
             <div className="globe-container">
-              <Globe /> {/* Replace the image with the Globe component */}
+              <CanvasGlobe
+                width={265}
+                height={265}
+                landColor="#fff"
+                countryColor="#F0B323"
+                borderColor="#FFF"
+              />
             </div>
           </div>
         </div>
@@ -92,6 +128,3 @@ const Overview = () => {
 };
 
 export default Overview;
-
-
-
