@@ -218,7 +218,7 @@ p {
   font-size: 30px;
   position: absolute;
   top: 90%;
-  transform: translate(-20%, -1530%);
+  transform: translate(-20%, -1730%);
   z-index: 1;
 }
 
@@ -228,7 +228,7 @@ p {
   font-weight: bolder;
   position: absolute;
   top: 90%;
-  transform: translate(200%, -1165%);
+  transform: translate(200%, -1310%);
   z-index: 1;
 }
 
@@ -238,6 +238,15 @@ p {
   font-size: 40px;
   position: absolute;
   top: 90%;
-  transform: translate(0%, -1100%);
+  transform: translate(0%, -1235%);
   z-index: 1;
+}
+
+.display-4 .text-drop-in{
+  font-size: 30px;  
+
+}
+
+.display-4-small {
+  font-size: 1.5rem !important; /* Adjust the size as needed */
 }
