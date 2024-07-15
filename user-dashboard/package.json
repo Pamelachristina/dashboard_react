@@ -29,7 +29,6 @@
   },
  
   "eslintConfig": {
-    "proxy": "https://foundry-reviews.dev.lbl.gov",
     "extends": [
       "react-app",
       "react-app/jest"
