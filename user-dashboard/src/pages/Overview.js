@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import StatsCard from "../components/StatsCard";
 import USMap from "../components/USMap";
 import CanvasGlobe from "../components/CanvasGlobe";
@@ -20,22 +21,32 @@ const Overview = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const dummyData = {
-          totalUsers: 100,
-          onSiteUsers: 60,
-          remoteUsers: 40,
-          minorityInstitutions: 10,
-          companies: 39,
-          states: 35,
-          countriesServed: 5,
-        };
+        const response = await axios.get("https://foundry-reviews.dev.lbl.gov/api/v1/UserDashboard/2013/MSIandEPSCoR");
+        const data = response.data;
 
-        setStats(dummyData);
+        setStats({
+          totalUsers: data.totalUsers,
+          onSiteUsers: data.onSiteUsers,
+          remoteUsers: data.remoteUsers,
+          minorityInstitutions: data.minorityInstitutions,
+          companies: data.companies,
+          states: data.states,
+          countriesServed: data.countriesServed,
+        });
         setCurrentText(
-          `${dummyData.minorityInstitutions} Minority Serving Institutions`
+          `${data.minorityInstitutions} Minority Serving Institutions`
         );
       } catch (error) {
         console.error("Failed to fetch stats:", error);
+        setStats({
+          totalUsers: "Error",
+          onSiteUsers: "Error",
+          remoteUsers: "Error",
+          minorityInstitutions: "Error",
+          companies: "Error",
+          states: "Error",
+          countriesServed: "Error",
+        });
       }
     };
 
@@ -82,7 +93,7 @@ const Overview = () => {
               <div className="w-50">
                 <p className="text-dark">In fiscal year 2023 we served:</p>
                 <div
-                  className={`display-4 font-weight-bold text-primary ${
+                  className={`display-4 display-4-small ${
                     isDropping ? "text-drop-out" : "text-drop-in"
                   }`}
                 >
@@ -112,14 +123,14 @@ const Overview = () => {
           </div>
         </div>
         <div className="row mb-4">
-          <div className="col-md-4 content-box content-box-small d-flex align-items-center justify-content-center">
-            <p className="h4 font-weight-bold">Placeholder</p>
+          <div className="col-md-4">
+            <StatsCard title="Number of Proposals" value={stats.totalUsers} />
           </div>
-          <div className="col-md-4 content-box content-box-small d-flex align-items-center justify-content-center">
-            <p className="h4 font-weight-bold">Highlight a user</p>
+          <div className="col-md-4">
+            <StatsCard title="Acceptance Rate" value={stats.onSiteUsers} />
           </div>
-          <div className="col-md-4 content-box content-box-small d-flex align-items-center justify-content-center">
-            <p className="h4 font-weight-bold">Placeholder</p>
+          <div className="col-md-4">
+            <StatsCard title="Number of Publications" value={stats.remoteUsers} />
           </div>
         </div>
       </div>
@@ -128,3 +139,5 @@ const Overview = () => {
 };
 
 export default Overview;
+
+
