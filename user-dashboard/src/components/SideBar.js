@@ -2,15 +2,17 @@
 
 import React from "react";
 import { NavLink } from "react-router-dom";
+import logo from "../assets/1_Signature_Preferred_2c_lg.png";
 
 const SideBar = () => {
   return (
     <div className="sideBar">
       <div className="p-4">
         <img
-          src="https://placehold.co/150x50/png?text=MOLECULAR+FOUNDRY"
+          src={logo}
           alt="Molecular Foundry logo"
           className="mb-4"
+          style={{ width: '215px', height: 'auto', position: 'relative', left: '-15px' }} // Adjust the width as needed
         />
         <div className="relative">
           <input
