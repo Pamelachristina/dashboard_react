@@ -15,15 +15,31 @@ const Overview = () => {
     countriesServed: "Loading...",
   });
 
+  const [stateData, setStateData] = useState([]);
   const [currentText, setCurrentText] = useState("");
   const [isDropping, setIsDropping] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get("https://foundry-reviews.dev.lbl.gov/api/v1/UserDashboard/2013/MSIandEPSCoR");
+        // token
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidW5pcXVlX25hbWUiOiJwY3NhbmNoZXpoZXJuYW5kZXoiLCJnaXZlbl9uYW1lIjoiUGFtZWxhICIsImZhbWlseV9uYW1lIjoiU2FuY2hleiBIZXJuYW5kZXoiLCJuYmYiOjE3MjEzMzY2MjEsImV4cCI6MTcyMTM3OTgyMSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE0NyIsImF1ZCI6IkZvdW5kcnlBUEkifQ.P6fzl_bamxsbXI7bunzemXudiAc8-J8egWGkrmxUMHQ';
+  
+        const response = await axios.get('/api/v1/UserDashboard/2016/MSIandEPSCoR', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        // Log the response data to verify it
+        console.log("API Response:", response.data);
+
         const data = response.data;
 
+        // Update state with the received data
+        setStateData(data);
+
+        // Ensure data structure matches expected state shape
         setStats({
           totalUsers: data.totalUsers,
           onSiteUsers: data.onSiteUsers,
@@ -101,7 +117,7 @@ const Overview = () => {
                 </div>
               </div>
               <div className="w-50 d-flex">
-                <USMap />
+                <USMap data={stateData} />
               </div>
             </div>
           </div>
@@ -139,5 +155,6 @@ const Overview = () => {
 };
 
 export default Overview;
+
 
 

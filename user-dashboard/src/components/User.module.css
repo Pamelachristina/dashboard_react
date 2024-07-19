@@ -1,19 +1,11 @@
 /* User.module.css */
 
 .header {
-  background-color: #fff;
-  padding: 5px 0; /* Reduce padding to make the header thinner */
+  background-color: #D1DDE6;
+  padding: 5px 0;
   color: white;
   text-align: center;
-  width: 100%; /* Ensure it extends to the full width */
-}
-
-h1 {
-  font-size: 2em;
-}
-
-p {
-  font-size: 1.2em;
+  width: 100%;
 }
 
 .avatar {
@@ -25,4 +17,5 @@ p {
 .main-content {
   padding: 0 !important;
 }
+
 
