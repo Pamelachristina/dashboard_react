@@ -4,7 +4,7 @@ import * as topojson from 'topojson-client';
 import us from './us.json'; // Ensure you have the US topojson data
 import '../App.css'; // Correct path to App.css
 
-const USMap = () => {
+const USMap = ({ data = [] }) => {
   const svgRef = useRef();
   const [popupData, setPopupData] = useState(null);
 
@@ -19,6 +19,12 @@ const USMap = () => {
     const path = d3.geoPath();
 
     const g = svg.append('g');
+
+    // Ensure data is defined and is an array
+    const stateDataMap = (Array.isArray(data) ? data : []).reduce((acc, item) => {
+      acc[item.state] = item.count;
+      return acc;
+    }, {});
 
     const states = g.append('g')
       .attr('fill', '#041C2C')
@@ -62,6 +68,7 @@ const USMap = () => {
 
         setPopupData({
           name: d.properties.name,
+          count: stateDataMap[d.id] || 0,
           coords: [x, y]
         });
       })
@@ -76,7 +83,7 @@ const USMap = () => {
       .attr('stroke-width', 2) // Increase the stroke width
       .attr('stroke-linejoin', 'round')
       .attr('d', path(topojson.mesh(us, us.objects.states, (a, b) => a !== b)));
-  }, []);
+  }, [data]); // Re-run the effect when data changes
 
   return (
     <div className="us-map-container">
@@ -87,7 +94,7 @@ const USMap = () => {
           top: `${popupData.coords[1]}px`
         }}>
           <h4>{popupData.name}</h4>
-          <p>User stats...</p>
+          <p>Users: {popupData.count}</p>
         </div>
       )}
     </div>

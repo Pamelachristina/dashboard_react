@@ -6,6 +6,8 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: 'https://foundry-reviews.dev.lbl.gov',
       changeOrigin: true,
+      secure: false,
     })
   );
 };
+
