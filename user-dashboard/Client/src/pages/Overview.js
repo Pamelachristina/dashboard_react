@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../axiosConfig"; // Adjust the path as needed
 import StatsCard from "../components/StatsCard";
 import USMap from "../components/USMap";
 import CanvasGlobe from "../components/CanvasGlobe";
@@ -15,7 +15,6 @@ const Overview = () => {
     countriesServed: "Loading...",
   });
 
-  const [stateData, setStateData] = useState([]);
   const [currentText, setCurrentText] = useState("");
   const [isDropping, setIsDropping] = useState(false);
 
@@ -23,23 +22,31 @@ const Overview = () => {
     const fetchStats = async () => {
       try {
         // Fetch total users
-        const totalUsersResponse = await axios.get('/api/total-users');
-        const totalUsers = totalUsersResponse.data.totalusers;
+        const totalUsersResponse = await axiosInstance.get('/api/total-users');
+        console.log('Total Users Response:', totalUsersResponse.data); // Log API response
+        const totalUsers = totalUsersResponse.data.totalusers; // Access the correct property
 
         // Fetch on-site users
-        const onSiteUsersResponse = await axios.get('/api/on-site-users');
-        const onSiteUsers = onSiteUsersResponse.data.onsiteusers;
+        const onSiteUsersResponse = await axiosInstance.get('/api/on-site-users');
+        console.log('On-Site Users Response:', onSiteUsersResponse.data); // Log API response
+        const onSiteUsers = onSiteUsersResponse.data.onsiteusers; // Adjust this based on actual response
 
         // Fetch remote users
-        const remoteUsersResponse = await axios.get('/api/remote-users');
-        const remoteUsers = remoteUsersResponse.data.remoteusers;
+        const remoteUsersResponse = await axiosInstance.get('/api/remote-users');
+        console.log('Remote Users Response:', remoteUsersResponse.data); // Log API response
+        const remoteUsers = remoteUsersResponse.data.remoteusers; // Adjust this based on actual response
 
-        setStats(prevStats => ({
-          ...prevStats,
-          totalUsers: totalUsers,
-          onSiteUsers: onSiteUsers,
-          remoteUsers: remoteUsers,
-        }));
+        // Update state
+        setStats(prevStats => {
+          const updatedStats = {
+            ...prevStats,
+            totalUsers: totalUsers,
+            onSiteUsers: onSiteUsers,
+            remoteUsers: remoteUsers,
+          };
+          console.log('Updated Stats:', updatedStats); // Log updated state
+          return updatedStats;
+        });
       } catch (error) {
         console.error("Failed to fetch stats:", error);
         setStats({
@@ -54,6 +61,7 @@ const Overview = () => {
       }
     };
 
+    console.log('Fetching stats...'); // Log when fetching starts
     fetchStats();
   }, []);
 
@@ -64,6 +72,8 @@ const Overview = () => {
       `in ${stats.states} States`,
     ];
     let index = 0;
+
+    console.log('State Data:', stats); // Log the state data before setting up the interval
 
     const interval = setInterval(() => {
       setIsDropping(true);
@@ -83,12 +93,15 @@ const Overview = () => {
         <div className="row mb-4">
           <div className="col-md-4">
             <StatsCard title="Total Users" value={stats.totalUsers} />
+            {console.log('Rendering Total Users:', stats.totalUsers)} {/* Log rendering data */}
           </div>
           <div className="col-md-4">
             <StatsCard title="On-site Users" value={stats.onSiteUsers} />
+            {console.log('Rendering On-Site Users:', stats.onSiteUsers)} {/* Log rendering data */}
           </div>
           <div className="col-md-4">
             <StatsCard title="Remote Users" value={stats.remoteUsers} />
+            {console.log('Rendering Remote Users:', stats.remoteUsers)} {/* Log rendering data */}
           </div>
         </div>
         <div className="row mb-4">
@@ -105,7 +118,7 @@ const Overview = () => {
                 </div>
               </div>
               <div className="w-50 d-flex">
-                <USMap data={stateData} />
+                <USMap data={[]} /> {/* Pass empty data or remove if not needed */}
               </div>
             </div>
           </div>
@@ -143,6 +156,7 @@ const Overview = () => {
 };
 
 export default Overview;
+
 
 
 
