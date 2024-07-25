@@ -12,7 +12,7 @@ const credentials = JSON.parse(fs.readFileSync(CREDENTIALS_PATH, 'utf8'));
 // Set up Google Sheets API
 const auth = new google.auth.GoogleAuth({
   credentials,
-  scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
 const sheets = google.sheets({ version: 'v4', auth });
@@ -74,3 +74,4 @@ async function fetchDataAndInsert() {
 module.exports = {
   fetchDataAndInsert,
 };
+
