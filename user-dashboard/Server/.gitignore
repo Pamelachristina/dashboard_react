@@ -1,0 +1,6 @@
+# dependencies
+# Ignore node_modules
+node_modules/
+
+# Ignore credentials
+credentials/google-credentials.json

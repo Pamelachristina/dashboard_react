@@ -1,0 +1,21 @@
+/* User.module.css */
+
+.header {
+  background-color: #D1DDE6;
+  padding: 5px 0;
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+}
+
+.main-content {
+  padding: 0 !important;
+}
+
+
