@@ -3,4 +3,7 @@
 node_modules/
 
 # Ignore credentials
-credentials/google-credentials.json
+credentials/googleCredentials.json
+
+# Environment variables
+.env

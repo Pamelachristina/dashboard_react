@@ -5,6 +5,7 @@ const port = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
+const { fetchDataAndInsert } = require('./services/googleSheetsToPostgres');
 
 // Middleware
 app.use(bodyParser.json());
@@ -33,6 +34,18 @@ pool.connect((err) => {
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+// Route to fetch data from Google Sheets and insert into Postgres
+app.get('/api/fetch-and-insert', async (req, res) => {
+  try {
+    await fetchDataAndInsert();
+    res.status(200).json({ message: 'Data fetched and inserted successfully' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.toString() });
+  }
+});
+
 
 app.get('/api/total-users', async (req, res) => {
   try {
