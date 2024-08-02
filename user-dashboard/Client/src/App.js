@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Overview from "./pages/Overview";
 import UserStats from "./pages/UserStats";
 import UserTrendsAndInsights from "./pages/UserTrendsInsights";
+import GoogleSheetForm from './pages/GoogleSheetForm'; 
 import Charts from "./pages/Charts";
 import Tables from "./pages/Tables";
 import Settings from "./pages/Settings";
@@ -23,6 +24,7 @@ function App() {
               path="/user-trends-and-insights"
               element={<UserTrendsAndInsights />}
             />
+            <Route path="/upload-data" element={<GoogleSheetForm />} />
             <Route path="/charts" element={<Charts />} />
             <Route path="/tables" element={<Tables />} />
             <Route path="/settings" element={<Settings />} />

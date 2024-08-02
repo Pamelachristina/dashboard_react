@@ -7,3 +7,15 @@
     width: 100%;
   }
   
+  .fixedCard {
+    /*border-radius: 4px; /* Optional: Add a slight border radius for better appearance */
+    box-shadow: 5px 8px 6px rgba(0, 0, 0, 0.3); /* Stronger shadow, offset to the right and down */
+  }
+  
+  .scrollableContent {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  
+  

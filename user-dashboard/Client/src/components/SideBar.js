@@ -60,6 +60,17 @@ const SideBar = () => {
           </li>
           <li className="mb-2">
             <NavLink
+              to="/upload-data"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
+              <i className="fas fa-chart-bar mr-2"></i> Upload Data
+            </NavLink>
+          </li>
+          
+          <li className="mb-2">
+            <NavLink
               to="/charts"
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
