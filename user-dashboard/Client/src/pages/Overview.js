@@ -19,7 +19,6 @@ const Overview = () => {
     publications: "Loading..."
   });
 
-  // const [employerTypeCount, setEmployerTypeCount] = useState([]);
   const [currentText, setCurrentText] = useState("");
   const [isDropping, setIsDropping] = useState(false);
   const [year, setYear] = useState(2023); // Default year
@@ -120,19 +119,6 @@ const Overview = () => {
     fetchStats();
   }, [year]);
 
-  /* useEffect(() => {
-    const fetchEmployerTypeCount = async () => {
-      try {
-        const response = await axiosInstance.get('/api/employer-type-count', { params: { year } });
-        setEmployerTypeCount(response.data);
-      } catch (error) {
-        console.error("Failed to fetch employer type count:", error);
-      }
-    };
-
-    fetchEmployerTypeCount();
-  }, [year]); */
-
   useEffect(() => {
     const texts = [
       `${stats.minorityInstitutions} Minority Serving Institutions`,
@@ -179,18 +165,16 @@ const Overview = () => {
         </div>
         <div className="row mb-4">
           <div className="col-md-8">
-            <div className="content-box d-flex">
-              <div className="w-50">
+            <div className="content-box">
+              <div className="text-container">
                 <p className="text-dark">In fiscal year {year} we served:</p>
                 <div
-                  className={`display-4 display-4-small ${
-                    isDropping ? "text-drop-out" : "text-drop-in"
-                  }`}
+                  className={`display-4 display-4-small ${isDropping ? "text-drop-out" : "text-drop-in"}`}
                 >
                   {currentText}
                 </div>
               </div>
-              <div className="w-50 d-flex">
+              <div className="us-map-container">
                 <USMap data={[]} /> {/* Pass empty data or remove if not needed */}
               </div>
             </div>
@@ -239,6 +223,11 @@ const Overview = () => {
 };
 
 export default Overview;
+
+
+
+
+
 
 
 

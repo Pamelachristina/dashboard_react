@@ -185,6 +185,28 @@ app.get('/api/minority-institutions', async (req, res) => {
   }
 });
 
+
+// Route to get state data (minority institutions and EPSCoR) for a specific year
+app.get('/api/state-data', async (req, res) => {
+  const { year } = req.query;
+  try {
+    console.log('Request to get state data for year:', year);
+    const result = await pool.query(`
+      SELECT col9 AS state, 
+             SUM(CASE WHEN col11 = 'Yes' THEN 1 ELSE 0 END) AS minorityServingInstitutions, 
+             SUM(CASE WHEN col12 = 'Yes' THEN 1 ELSE 0 END) AS EPSCOR
+      FROM google_sheets_data 
+      WHERE year = $1
+      GROUP BY col9
+    `, [year]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error querying state data:', err);
+    res.status(500).send('Error querying the database');
+  }
+});
+
+
 // Route to get companies (non-universities) for a specific year
 app.get('/api/companies', async (req, res) => {
   const { year } = req.query;

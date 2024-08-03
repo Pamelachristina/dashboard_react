@@ -8,9 +8,120 @@ const USMap = ({ data = [] }) => {
   const svgRef = useRef();
   const [popupData, setPopupData] = useState(null);
 
+  // Create the state abbreviation to ID map
+  const stateAbbrToIdMap = {
+    'AL': '01',
+    'AK': '02',
+    'AZ': '04',
+    'AR': '05',
+    'CA': '06',
+    'CO': '08',
+    'CT': '09',
+    'DE': '10',
+    'DC': '11',
+    'FL': '12',
+    'GA': '13',
+    'HI': '15',
+    'ID': '16',
+    'IL': '17',
+    'IN': '18',
+    'IA': '19',
+    'KS': '20',
+    'KY': '21',
+    'LA': '22',
+    'ME': '23',
+    'MD': '24',
+    'MA': '25',
+    'MI': '26',
+    'MN': '27',
+    'MS': '28',
+    'MO': '29',
+    'MT': '30',
+    'NE': '31',
+    'NV': '32',
+    'NH': '33',
+    'NJ': '34',
+    'NM': '35',
+    'NY': '36',
+    'NC': '37',
+    'ND': '38',
+    'OH': '39',
+    'OK': '40',
+    'OR': '41',
+    'PA': '42',
+    'RI': '44',
+    'SC': '45',
+    'SD': '46',
+    'TN': '47',
+    'TX': '48',
+    'UT': '49',
+    'VT': '50',
+    'VA': '51',
+    'WA': '53',
+    'WV': '54',
+    'WI': '55',
+    'WY': '56'
+  };
+
+  // Create a reverse map for names
+  const stateIdToNameMap = {
+    '01': 'Alabama',
+    '02': 'Alaska',
+    '04': 'Arizona',
+    '05': 'Arkansas',
+    '06': 'California',
+    '08': 'Colorado',
+    '09': 'Connecticut',
+    '10': 'Delaware',
+    '11': 'District of Columbia',
+    '12': 'Florida',
+    '13': 'Georgia',
+    '15': 'Hawaii',
+    '16': 'Idaho',
+    '17': 'Illinois',
+    '18': 'Indiana',
+    '19': 'Iowa',
+    '20': 'Kansas',
+    '21': 'Kentucky',
+    '22': 'Louisiana',
+    '23': 'Maine',
+    '24': 'Maryland',
+    '25': 'Massachusetts',
+    '26': 'Michigan',
+    '27': 'Minnesota',
+    '28': 'Mississippi',
+    '29': 'Missouri',
+    '30': 'Montana',
+    '31': 'Nebraska',
+    '32': 'Nevada',
+    '33': 'New Hampshire',
+    '34': 'New Jersey',
+    '35': 'New Mexico',
+    '36': 'New York',
+    '37': 'North Carolina',
+    '38': 'North Dakota',
+    '39': 'Ohio',
+    '40': 'Oklahoma',
+    '41': 'Oregon',
+    '42': 'Pennsylvania',
+    '44': 'Rhode Island',
+    '45': 'South Carolina',
+    '46': 'South Dakota',
+    '47': 'Tennessee',
+    '48': 'Texas',
+    '49': 'Utah',
+    '50': 'Vermont',
+    '51': 'Virginia',
+    '53': 'Washington',
+    '54': 'West Virginia',
+    '55': 'Wisconsin',
+    '56': 'Wyoming'
+  };
+
   useEffect(() => {
+    console.log("USMap data:", data); // Log the data passed to USMap
     const svg = d3.select(svgRef.current)
-      .attr('viewBox', `0 0 960 600`) // Adjust viewBox to include all states
+      .attr('viewBox', '0 0 960 600') // Adjust viewBox to include all states
       .attr('preserveAspectRatio', 'xMidYMid meet') // Preserve aspect ratio
       .attr('width', '100%') // Responsive width
       .attr('height', '100%') // Responsive height
@@ -20,11 +131,38 @@ const USMap = ({ data = [] }) => {
 
     const g = svg.append('g');
 
-    // Ensure data is defined and is an array
-    const stateDataMap = (Array.isArray(data) ? data : []).reduce((acc, item) => {
-      acc[item.state] = item.count;
+    // Log the state IDs and names from the JSON file
+    const statesData = topojson.feature(us, us.objects.states).features.map(state => {
+      const name = stateIdToNameMap[state.id];
+      console.log("State object:", state);
+      return {
+        id: state.id,
+        name: name ? name : "Unknown"
+      };
+    });
+
+    console.log("States Data from JSON:", statesData);
+
+    // Create a mapping from state abbreviations to IDs
+    const stateIdMap = Object.keys(stateAbbrToIdMap).reduce((acc, abbr) => {
+      acc[stateAbbrToIdMap[abbr]] = abbr;
       return acc;
     }, {});
+
+    console.log("State ID Map:", stateIdMap);
+
+    const stateDataMap = (Array.isArray(data) ? data : []).reduce((acc, item) => {
+      const stateId = stateAbbrToIdMap[item.state];
+      if (stateId) {
+        acc[stateId] = {
+          minorityServingInstitutions: item.minorityservinginstitutions,
+          EPSCOR: item.epscor,
+        };
+      }
+      return acc;
+    }, {});
+
+    console.log("stateDataMap:", stateDataMap); // Log the stateDataMap
 
     const states = g.append('g')
       .attr('fill', '#041C2C')
@@ -66,16 +204,19 @@ const USMap = ({ data = [] }) => {
           y = 0;
         }
 
+        const stateId = d.id; // ID from the JSON file
+        const stateData = stateDataMap[stateId] || { minorityServingInstitutions: 0, EPSCOR: 0 };
+
         setPopupData({
-          name: d.properties.name,
-          count: stateDataMap[d.id] || 0,
+          name: stateIdToNameMap[stateId] ? stateIdToNameMap[stateId] : "Unknown",
+          data: stateData,
           coords: [x, y]
         });
       })
       .attr('d', path);
 
     states.append('title')
-      .text(d => d.properties.name);
+      .text(d => stateIdToNameMap[d.id] ? stateIdToNameMap[d.id] : "Unknown");
 
     g.append('path')
       .attr('fill', 'none')
@@ -83,7 +224,7 @@ const USMap = ({ data = [] }) => {
       .attr('stroke-width', 2) // Increase the stroke width
       .attr('stroke-linejoin', 'round')
       .attr('d', path(topojson.mesh(us, us.objects.states, (a, b) => a !== b)));
-  }, [data]); // Re-run the effect when data changes
+  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="us-map-container">
@@ -94,7 +235,8 @@ const USMap = ({ data = [] }) => {
           top: `${popupData.coords[1]}px`
         }}>
           <h4>{popupData.name}</h4>
-          <p>Users: {popupData.count}</p>
+          <p>Minority Serving Institutions: {popupData.data.minorityServingInstitutions}</p>
+          <p>EPSCOR: {popupData.data.EPSCOR}</p>
         </div>
       )}
     </div>
@@ -102,6 +244,9 @@ const USMap = ({ data = [] }) => {
 };
 
 export default USMap;
+
+
+
 
 
 
