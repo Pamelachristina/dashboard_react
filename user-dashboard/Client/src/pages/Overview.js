@@ -3,6 +3,7 @@ import axiosInstance from "../axiosConfig"; // Adjust the path as needed
 import StatsCard from "../components/StatsCard";
 import USMap from "../components/USMap";
 import CanvasGlobe from "../components/CanvasGlobe";
+import '../App.css'; // Ensure you include the CSS styles
 
 const Overview = () => {
   const [stats, setStats] = useState({
@@ -19,9 +20,10 @@ const Overview = () => {
     publications: "Loading..."
   });
 
-  const [currentText, setCurrentText] = useState("");
   const [isDropping, setIsDropping] = useState(false);
   const [year, setYear] = useState(2023); // Default year
+  const [currentIndex, setCurrentIndex] = useState(0); // Current index for the text animation
+  const [stateData, setStateData] = useState([]); // State data for the USMap component
 
   const handleYearChange = (event) => {
     setYear(event.target.value);
@@ -84,6 +86,11 @@ const Overview = () => {
          const publications = publicationsResponse.data.publications;
          console.log('Publications:', publications); // Log the publications
 
+        // Fetch state data for the USMap component
+        const stateDataResponse = await axiosInstance.get('/api/state-data', { params: { year } });
+        const stateData = stateDataResponse.data;
+        console.log('State data:', stateData); // Log the state data
+
         // Update state
         setStats({
           totalUsers,
@@ -98,6 +105,7 @@ const Overview = () => {
           acceptanceRate,
           publications
         });
+        setStateData(stateData);
       } catch (error) {
         console.error("Failed to fetch stats:", error);
         setStats({
@@ -120,24 +128,16 @@ const Overview = () => {
   }, [year]);
 
   useEffect(() => {
-    const texts = [
-      `${stats.minorityInstitutions} Minority Serving Institutions`,
-      `${stats.companies} Companies`,
-      `in ${stats.states} States`,
-    ];
-    let index = 0;
-
     const interval = setInterval(() => {
       setIsDropping(true);
       setTimeout(() => {
-        setCurrentText(texts[index]);
+        setCurrentIndex((currentIndex + 1) % 3);
         setIsDropping(false);
-        index = (index + 1) % texts.length;
       }, 1000);
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [stats]);
+  }, [currentIndex]);
 
   return (
     <div className="main-content">
@@ -166,16 +166,32 @@ const Overview = () => {
         <div className="row mb-4">
           <div className="col-md-8">
             <div className="content-box">
-              <div className="text-container">
-                <p className="text-dark">In fiscal year {year} we served:</p>
+              <div className="animated-text-container">
+                <h2>In fiscal year {year} we served:</h2>
                 <div
-                  className={`display-4 display-4-small ${isDropping ? "text-drop-out" : "text-drop-in"}`}
+                  className={`animated-text ${isDropping ? "text-drop-out" : "text-drop-in"}`}
+                  style={{ display: currentIndex === 0 ? 'block' : 'none' }}
                 >
-                  {currentText}
+                  <span className="large-number">{stats.minorityInstitutions}</span>
+                  <span className="small-text">Minority Serving Institutions</span>
+                </div>
+                <div
+                  className={`animated-text ${isDropping ? "text-drop-out" : "text-drop-in"}`}
+                  style={{ display: currentIndex === 1 ? 'block' : 'none' }}
+                >
+                  <span className="large-number">{stats.companies}</span>
+                  <span className="small-text">Companies</span>
+                </div>
+                <div
+                  className={`animated-text ${isDropping ? "text-drop-out" : "text-drop-in"}`}
+                  style={{ display: currentIndex === 2 ? 'block' : 'none' }}
+                >
+                  <span className="large-number">{stats.states}</span>
+                  <span className="small-text">States</span>
                 </div>
               </div>
               <div className="us-map-container">
-                <USMap data={[]} /> {/* Pass empty data or remove if not needed */}
+                <USMap data={stateData} /> {/* Pass the state data to the USMap component */}
               </div>
             </div>
           </div>
@@ -207,22 +223,19 @@ const Overview = () => {
             <StatsCard title="Number of Publications" value={stats.publications} />
           </div>
         </div>
-     {/*    <div className="row mb-4">
-          {employerTypeCount.map((item, index) => (
-            <div className="col-md-4" key={index}>
-              <StatsCard
-                title={`${item.employer_type} (${item.year})`}
-                value={item.user_count}
-              />
-            </div>
-          ))}
-        </div> */}
       </div>
     </div>
   );
 };
 
 export default Overview;
+
+
+
+
+
+
+
 
 
 

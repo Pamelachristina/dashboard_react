@@ -12,6 +12,7 @@ const GoogleSheetForm = () => {
 
   const [formState, setFormState] = useState(initialFormState);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(''); // New state for messages
   const fileInputRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -32,20 +33,21 @@ const GoogleSheetForm = () => {
   const handleSheetSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setMessage(''); // Clear message before new request
     try {
       const response = await axios.post('/api/fetch-and-insert', {
         spreadsheetId: formState.spreadsheetId,
         year: formState.sheetYear
       });
-      console.log(response.data);
-      alert('Google Sheets data fetched and inserted successfully');
+      console.log('Server response:', response.data);
+      setMessage(response.data.message); // Set the message from the server response
       setFormState(initialFormState); // Reset form state
       if (fileInputRef.current) {
         fileInputRef.current.value = ''; // Reset file input
       }
     } catch (error) {
       console.error('Error fetching and inserting Google Sheets data:', error);
-      alert('Error fetching and inserting Google Sheets data');
+      setMessage('Error fetching and inserting Google Sheets data');
     } finally {
       setLoading(false);
     }
@@ -54,9 +56,12 @@ const GoogleSheetForm = () => {
   const handleFileSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setMessage(''); // Clear message before new request
     const formData = new FormData();
     formData.append('year', formState.fileYear);
     formData.append('file', formState.file);
+
+    console.log('Form Data:', formData); // Log the FormData before sending
 
     try {
       const response = await axios.post('/api/upload-excel', formData, {
@@ -64,15 +69,15 @@ const GoogleSheetForm = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response.data);
-      alert('Excel file uploaded and data inserted successfully');
+      console.log('Server response:', response.data);
+      setMessage(response.data.message); // Set the message from the server response
       setFormState(initialFormState); // Reset form state
       if (fileInputRef.current) {
         fileInputRef.current.value = ''; // Reset file input
       }
     } catch (error) {
       console.error('Error uploading and inserting Excel data:', error);
-      alert('Error uploading and inserting Excel data');
+      setMessage('Error uploading and inserting Excel data');
     } finally {
       setLoading(false);
     }
@@ -82,6 +87,7 @@ const GoogleSheetForm = () => {
     <div className="container mt-5 d-flex justify-content-center">
       <div className="card p-4 shadow" style={{ width: '400px' }}>
         {loading && <Spinner />}
+        {message && <div className="alert alert-info">{message}</div>} {/* Display message */}
         <form onSubmit={handleSheetSubmit}>
           <div className="mb-3">
             <label htmlFor="spreadsheetId" className="form-label">Google Sheets URL:</label>
@@ -142,6 +148,9 @@ const GoogleSheetForm = () => {
 };
 
 export default GoogleSheetForm;
+
+
+
 
 
 

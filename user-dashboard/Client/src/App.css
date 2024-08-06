@@ -43,6 +43,52 @@
   animation: dropAway 1s ease-in-out;
 }
 
+.animated-text-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #041C2C;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+}
+
+.animated-text-container h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.animated-text-container .large-number {
+  font-size: 4rem;
+  color: #4698CB;
+  margin: 0;
+}
+
+.animated-text-container .small-text {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #041C2C;
+  margin: 0;
+}
+
+.animated-text {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Existing CSS */
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap');
 
@@ -172,11 +218,27 @@ p {
   position: absolute;
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding: 15px; /* Consistent padding around the popup */
   pointer-events: none;
   transform: translate(-50%, -100%);
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 10; /* Ensure popup appears above other elements */
+  max-width: 250px; /* Adjust width */
+  white-space: normal; /* Ensure text wraps */
+}
+
+.popup p {
+  margin: 0; /* Remove default margin */
+  line-height: 1.2; /* Adjust line height to tighten space */
+}
+
+.popup .line1 {
+  margin-bottom: 1px; /* Adjust as necessary to control space between lines */
+}
+
+.popup .number {
+  font-weight: bold;
+  color: #4698CB;
 }
 
 .navbar-nav {
@@ -216,14 +278,6 @@ p {
   flex: 0 0 auto; /* Prevent the container from shrinking */
   max-width: 200px; /* Set a max width for the text container */
   text-align: left; /* Align text to the left */
-}
-
-.text-drop-in {
-  animation: dropDown 1s ease-in-out;
-}
-
-.text-drop-out {
-  animation: dropAway 1s ease-in-out;
 }
 
 .display-4-small {

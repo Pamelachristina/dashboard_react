@@ -62,6 +62,20 @@ app.post('/api/fetch-and-insert', async (req, res) => {
   }
 });
 
+// Route to fetch data from Google Sheets and insert into Postgres
+app.post('/api/fetch-and-insert', async (req, res) => {
+  const { spreadsheetId, year } = req.body;
+  try {
+    console.log('Received request to fetch and insert Google Sheets data:', { spreadsheetId, year });
+    const result = await fetchDataAndInsert(spreadsheetId, year);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error fetching and inserting Google Sheets data:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.toString() });
+  }
+});
+
+
 // Route to upload Excel file and insert data into Postgres
 app.post('/api/upload-excel', upload.single('file'), async (req, res) => {
   const { year } = req.body;
@@ -72,14 +86,16 @@ app.post('/api/upload-excel', upload.single('file'), async (req, res) => {
       console.error('No file uploaded');
       return res.status(400).json({ message: 'No file uploaded' });
     }
-    const filePath = path.join(__dirname, file.path);
-    await processExcelFile(filePath, year);
-    res.status(200).json({ message: 'Excel file uploaded and data inserted successfully' });
+    const filePath = path.join(__dirname, 'uploads', file.filename);
+    console.log('File path:', filePath);
+    const result = await processExcelFile(filePath, year);
+    res.status(200).json(result);
   } catch (error) {
     console.error('Error uploading and inserting Excel data:', error);
     res.status(500).json({ message: 'Internal server error', error: error.toString() });
   }
 });
+
 
 // Route to get total users for a specific year
 app.get('/api/total-users', async (req, res) => {
@@ -185,7 +201,6 @@ app.get('/api/minority-institutions', async (req, res) => {
   }
 });
 
-
 // Route to get state data (minority institutions and EPSCoR) for a specific year
 app.get('/api/state-data', async (req, res) => {
   const { year } = req.query;
@@ -205,7 +220,6 @@ app.get('/api/state-data', async (req, res) => {
     res.status(500).send('Error querying the database');
   }
 });
-
 
 // Route to get companies (non-universities) for a specific year
 app.get('/api/companies', async (req, res) => {
@@ -241,7 +255,6 @@ app.get('/api/companies', async (req, res) => {
   }
 });
 
-
 // Route to get states for a specific year
 app.get('/api/states', async (req, res) => {
   const { year } = req.query;
@@ -276,7 +289,6 @@ app.get('/api/countries-served', async (req, res) => {
   }
 });
 
-
 app.get('/api/publications', async (req, res) => {
   const { year } = req.query;
   try {
@@ -297,7 +309,6 @@ app.get('/api/publications', async (req, res) => {
   }
 });
 
-
 // Route to get institutions classified as MSI or EPSCoR for a specific year
 app.get('/api/institutions', async (req, res) => {
   const { year } = req.query;
@@ -317,7 +328,6 @@ app.get('/api/institutions', async (req, res) => {
     res.status(500).send('Error querying the database');
   }
 });
-
 
 // Route to get employer type count
 app.get('/api/employer-type-count', async (req, res) => {
@@ -341,3 +351,4 @@ app.get('/api/employer-type-count', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+

@@ -118,6 +118,39 @@ const USMap = ({ data = [] }) => {
     '56': 'Wyoming'
   };
 
+  // Define states that should have the popup centered
+  const centeredStates = new Set([
+    '02', // Alaska
+    '04', // Arizona
+    '06', // California
+    '08', // Colorado
+    '10', // Delaware
+    '16', // Idaho
+    '20', // Kansas
+    '17', // Illinois
+    '18', // Indiana
+    '19', // Iowa
+    '21', // Kentucky
+    '23', // Maine
+    '24', // Maryland
+    '30', // Montana
+    '31', // Nebraska
+    '32', // Nevada
+    '33', // New Hampshire
+    '34', // New Jersey
+    '37', // North Carolina
+    '38', // North Dakota
+    '39', // Ohio
+    '41', // Oregon
+    '42', // Pennsylvania
+    '49', // Utah
+    '50', // Vermont
+    '51', // Virginia
+    '53', // Washington
+    '54', // West Virginia
+    '29'  // Missouri
+  ]);
+
   useEffect(() => {
     console.log("USMap data:", data); // Log the data passed to USMap
     const svg = d3.select(svgRef.current)
@@ -180,28 +213,34 @@ const USMap = ({ data = [] }) => {
       .on('click', function(event, d) {
         const coords = d3.pointer(event);
         const container = svg.node().getBoundingClientRect();
-        const popupWidth = 250; // Adjust as necessary
+        const popupWidth = 250; // Adjust width
         const popupHeight = 200; // Adjust as necessary
 
-        // Offset values to position the popup off-centered
-        const offsetX = 10;
-        const offsetY = 10;
+        let x, y;
 
-        let x = coords[0] + offsetX;
-        let y = coords[1] + offsetY;
+        if (centeredStates.has(d.id)) {
+          // Center position
+          x = container.width / 2 - popupWidth / 2;
+          y = container.height / 2 - popupHeight / 2;
+        } else {
+          // Offset values to position the popup off-centered
+          const offsetX = 10;
+          const offsetY = 10;
 
-        // Adjust x position to ensure popup is within bounds
-        if (x + popupWidth > container.width) {
-          x = container.width - popupWidth;
-        } else if (x < 0) {
-          x = 0;
-        }
+          x = coords[0] + offsetX;
+          y = coords[1] - popupHeight - offsetY;
 
-        // Adjust y position to ensure popup is within bounds
-        if (y + popupHeight > container.height) {
-          y = container.height - popupHeight;
-        } else if (y < 0) {
-          y = 0;
+          // Adjust x position to ensure popup is within bounds
+          if (x + popupWidth > container.width) {
+            x = container.width - popupWidth;
+          } else if (x < 0) {
+            x = 0;
+          }
+
+          // Adjust y position to ensure popup is within bounds
+          if (y < 0) {
+            y = coords[1] + offsetY;
+          }
         }
 
         const stateId = d.id; // ID from the JSON file
@@ -235,8 +274,9 @@ const USMap = ({ data = [] }) => {
           top: `${popupData.coords[1]}px`
         }}>
           <h4>{popupData.name}</h4>
-          <p>Minority Serving Institutions: {popupData.data.minorityServingInstitutions}</p>
-          <p>EPSCOR: {popupData.data.EPSCOR}</p>
+          <p className="line1">Minority Serving</p>
+          <p>Institutions: <span className="number">{popupData.data.minorityServingInstitutions}</span></p>
+          <p>EPSCOR: <span className="number">{popupData.data.EPSCOR}</span></p>
         </div>
       )}
     </div>
@@ -244,6 +284,15 @@ const USMap = ({ data = [] }) => {
 };
 
 export default USMap;
+
+
+
+
+
+
+
+
+
 
 
 
