@@ -165,7 +165,7 @@ const Overview = () => {
         </div>
         <div className="row mb-4">
           <div className="col-md-8">
-            <div className="content-box">
+            <div className="content-box" style={{ position: 'relative' }}>
               <div className="animated-text-container">
                 <h2>In fiscal year {year} we served:</h2>
                 <div
@@ -173,7 +173,11 @@ const Overview = () => {
                   style={{ display: currentIndex === 0 ? 'block' : 'none' }}
                 >
                   <span className="large-number">{stats.minorityInstitutions}</span>
-                  <span className="small-text">Minority Serving Institutions</span>
+                  <div className="stack-text">
+                    <span>Minority</span>
+                    <span>Serving</span>
+                    <span>Institutions</span>
+                  </div>
                 </div>
                 <div
                   className={`animated-text ${isDropping ? "text-drop-out" : "text-drop-in"}`}
@@ -196,11 +200,11 @@ const Overview = () => {
             </div>
           </div>
           <div className="col-md-4 d-flex flex-column align-items-center justify-content-center content-box">
-            <p className="h4 font-weight-bold mb-2">Serving</p>
-            <p className="display-4 font-weight-bold mb-2">
-              {stats.countriesServed}
+            <p className="serving-text">Serving</p>
+            <p className="countries-served">
+              <span className="large-number">{stats.countriesServed}</span>
+              <span className="small-text">Countries</span>
             </p>
-            <p className="h4 font-weight-bold mb-4">Countries</p>
             <div className="globe-container">
               <CanvasGlobe
                 width={265}
@@ -229,6 +233,11 @@ const Overview = () => {
 };
 
 export default Overview;
+
+
+
+
+
 
 
 

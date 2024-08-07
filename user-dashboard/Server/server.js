@@ -62,18 +62,18 @@ app.post('/api/fetch-and-insert', async (req, res) => {
   }
 });
 
-// Route to fetch data from Google Sheets and insert into Postgres
-app.post('/api/fetch-and-insert', async (req, res) => {
-  const { spreadsheetId, year } = req.body;
-  try {
-    console.log('Received request to fetch and insert Google Sheets data:', { spreadsheetId, year });
-    const result = await fetchDataAndInsert(spreadsheetId, year);
-    res.status(200).json(result);
-  } catch (error) {
-    console.error('Error fetching and inserting Google Sheets data:', error);
-    res.status(500).json({ message: 'Internal server error', error: error.toString() });
-  }
-});
+// // Route to fetch data from Google Sheets and insert into Postgres
+// app.post('/api/fetch-and-insert', async (req, res) => {
+//   const { spreadsheetId, year } = req.body;
+//   try {
+//     console.log('Received request to fetch and insert Google Sheets data:', { spreadsheetId, year });
+//     const result = await fetchDataAndInsert(spreadsheetId, year);
+//     res.status(200).json(result);
+//   } catch (error) {
+//     console.error('Error fetching and inserting Google Sheets data:', error);
+//     res.status(500).json({ message: 'Internal server error', error: error.toString() });
+//   }
+// });
 
 
 // Route to upload Excel file and insert data into Postgres
@@ -309,19 +309,28 @@ app.get('/api/publications', async (req, res) => {
   }
 });
 
-// Route to get institutions classified as MSI or EPSCoR for a specific year
+// Route to get institutions classified as MSI or EPSCoR or ERI for a specific year
 app.get('/api/institutions', async (req, res) => {
   const { year } = req.query;
   try {
+    if (!year) {
+      return res.status(400).json({ error: 'Year is required' });
+    }
     console.log('Request to get institutions for year:', year);
     const result = await pool.query(`
       SELECT col7 AS name, 
-             col10 = 'Yes' AS emerging_research_institute, 
+             col10 = 'Yes' AS eri, 
              col11 = 'Yes' AS msi, 
              col12 = 'Yes' AS epscor 
       FROM google_sheets_data 
-      WHERE year = $1 AND (col11 = 'Yes' OR col12 = 'Yes')
+      WHERE year = $1 AND (col11 = 'Yes' OR col12 = 'Yes' OR col10 = 'Yes')
     `, [year]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No institutions found for the given year' });
+    }
+    
+    console.log('Institutions result:', result.rows);
     res.json(result.rows);
   } catch (err) {
     console.error('Error querying institutions:', err);
@@ -329,23 +338,7 @@ app.get('/api/institutions', async (req, res) => {
   }
 });
 
-// Route to get employer type count
-app.get('/api/employer-type-count', async (req, res) => {
-  const { year } = req.query;
-  try {
-    const result = await pool.query(`
-      SELECT year, col17 AS employer_type, COUNT(*) as user_count
-      FROM google_sheets_data
-      WHERE year = $1
-      GROUP BY year, col17
-      ORDER BY year, col17;
-    `, [year]);
-    res.json(result.rows);
-  } catch (err) {
-    console.error('Error querying employer type count:', err);
-    res.status(500).send('Error querying the database');
-  }
-});
+
 
 // Start server
 app.listen(port, () => {

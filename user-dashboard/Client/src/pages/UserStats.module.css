@@ -1,21 +1,48 @@
-/* UserStats.module.css */
+.center-text {
+  text-align: center;
+}
 
-.contentBox {
-    background-color: #f8f9fa;
-    padding: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-  }
-  
-  .fixedCard {
-    /*border-radius: 4px; /* Optional: Add a slight border radius for better appearance */
-    box-shadow: 5px 8px 6px rgba(0, 0, 0, 0.3); /* Stronger shadow, offset to the right and down */
-  }
-  
-  .scrollableContent {
-    max-height: 400px;
-    overflow-y: auto;
-  }
-  
-  
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #007bff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .active a {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.entries-info {
+  margin-right: auto;
+}
+
+
   
