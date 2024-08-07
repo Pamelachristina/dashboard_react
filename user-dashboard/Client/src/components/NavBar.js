@@ -38,6 +38,11 @@ const NavBar = () => {
             </NavLink>
           </li>
           <li className="nav-item">
+            <NavLink className="nav-link" to="/upload-data">
+              Upload Data
+            </NavLink>
+          </li>
+          <li className="nav-item">
             <NavLink className="nav-link" to="/charts">
               Charts
             </NavLink>

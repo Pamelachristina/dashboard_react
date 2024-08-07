@@ -1,9 +1,48 @@
-/* UserStats.module.css */
+.center-text {
+  text-align: center;
+}
 
-.contentBox {
-    background-color: #f8f9fa;
-    padding: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-  }
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #007bff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .active a {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.entries-info {
+  margin-right: auto;
+}
+
+
   

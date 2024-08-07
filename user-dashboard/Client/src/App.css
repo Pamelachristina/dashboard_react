@@ -43,6 +43,113 @@
   animation: dropAway 1s ease-in-out;
 }
 
+.animated-text-container {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  justify-content: center;
+  flex-direction: column;
+  color: #041C2C;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 600px;
+  text-align: left; /* Align text to the left */
+  position: absolute; /* Position the container absolutely */
+  top: 0; /* Align it to the top */
+  left: 0; /* Align it to the left */
+  transform: translate(0, 0); /* Adjust for positioning */
+}
+
+.animated-text-container h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.animated-text-container .large-number {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #4698CB;
+  margin: 0;
+  text-align: left; /* Align the large number to the left */
+  width: 100%; /* Ensure it takes full width */
+  padding-left: 10px; /* Adjust padding to align with the text */
+}
+
+.animated-text-container .small-text {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #041C2C;
+  margin: 0;
+}
+
+.animated-text {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.stack-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  line-height: 1; /* Reduce the space between lines */
+}
+
+.stack-text span {
+  display: block;
+  text-align: left; /* Align text to the left */
+  font-size: 4rem;
+  font-weight: bold;
+  color: #041C2C;
+  width: 100%;
+  margin: 0; /* Remove any default margins */
+}
+
+.countries-served {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  justify-content: center;
+  color: #041C2C;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 600px;
+  text-align: left; /* Align text to the left */
+}
+
+.countries-served .large-number {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #4698CB;
+  margin: 0;
+  text-align: left; /* Align the large number to the left */
+  width: 100%; /* Ensure it takes full width */
+}
+
+.countries-served .small-text {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #041C2C;
+  margin: 0;
+}
+
+.countries-served .serving-text {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #041C2C;
+  margin: 0;
+  text-align: left; /* Align text to the left */
+  width: 100%; /* Ensure it takes full width */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Existing CSS */
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap');
 
@@ -53,7 +160,6 @@ body {
 }
 
 .header {
-  background-color: #282c34;
   padding: 20px;
   color: white;
   text-align: center;
@@ -137,10 +243,12 @@ p {
   padding: 20px;
   text-align: center; /* Center the text */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row; /* Use flexbox for alignment */
+  justify-content: flex-start; /* Align items to the left */
+  align-items: flex-start; /* Align items to the top */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 700px; /* Increased height */
+  position: relative;
 }
 
 .content-box-small {
@@ -148,10 +256,11 @@ p {
 }
 
 .us-map-container {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-bottom: 75%; /* Aspect ratio adjustment */
+  flex: 0 0 auto; /* Prevent the map from resizing */
+  position: absolute;
+  right: 0;
+  width: 750px; /* Set the desired width */
+  height: 620px; /* Set the desired height */
   overflow: hidden;
 }
 
@@ -159,7 +268,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 120%;
   height: 100%;
   z-index: 5; /* Ensure SVG is properly layered */
 }
@@ -168,11 +277,27 @@ p {
   position: absolute;
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding: 15px; /* Consistent padding around the popup */
   pointer-events: none;
   transform: translate(-50%, -100%);
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 10; /* Ensure popup appears above other elements */
+  max-width: 250px; /* Adjust width */
+  white-space: normal; /* Ensure text wraps */
+}
+
+.popup p {
+  margin: 0; /* Remove default margin */
+  line-height: 1.2; /* Adjust line height to tighten space */
+}
+
+.popup .line1 {
+  margin-bottom: 1px; /* Adjust as necessary to control space between lines */
+}
+
+.popup .number {
+  font-weight: bold;
+  color: #4698CB;
 }
 
 .navbar-nav {
@@ -203,50 +328,171 @@ p {
 
 .large-image-globe {
   width: 335px; /* Set the width of the globe */
-  height: 390px; /* Set the height of the globe */
+  height: 500px; /* Increased height to match content box */
   z-index: 1; /* Ensure it doesn't interfere with other elements */
   object-fit: contain; /* Ensure the image scales correctly within the container */
 }
 
 .text-container {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.h4.font-weight-bold.mb-2 {
-  color: #041C2C;
-  font-size: 30px;
-  position: absolute;
-  top: 90%;
-  transform: translate(-20%, -1730%);
-  z-index: 1;
-}
-
-.display-4.font-weight-bold.mb-2 {
-  color: #041C2C;
-  font-size: 40px;
-  font-weight: bolder;
-  position: absolute;
-  top: 90%;
-  transform: translate(200%, -1310%);
-  z-index: 1;
-}
-
-.h4.font-weight-bold.mb-4 {
-  color: #041C2C;
-  font-weight: bolder;
-  font-size: 40px;
-  position: absolute;
-  top: 90%;
-  transform: translate(0%, -1235%);
-  z-index: 1;
-}
-
-.display-4 .text-drop-in{
-  font-size: 30px;  
-
+  flex: 0 0 auto; /* Prevent the container from shrinking */
+  max-width: 200px; /* Set a max width for the text container */
+  text-align: left; /* Align text to the left */
 }
 
 .display-4-small {
   font-size: 1.5rem !important; /* Adjust the size as needed */
 }
+
+/* Media Queries for Responsive Design */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 575.98px) {
+  .main-content {
+    padding: 10px;
+  }
+
+  .content-box {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .animated-text-container {
+    position: static;
+    transform: translate(0, 0);
+    margin-bottom: 20px;
+  }
+
+  .us-map-container {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .sideBar {
+    width: 100%;
+  }
+
+  .stats-card-value {
+    font-size: 2em;
+  }
+
+  .stats-card-title {
+    font-size: 1em;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 767.98px) {
+  .main-content {
+    padding: 15px;
+  }
+
+  .content-box {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .animated-text-container {
+    position: static;
+    transform: translate(0, 0);
+    margin-bottom: 20px;
+  }
+
+  .us-map-container {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .sideBar {
+    width: 100%;
+  }
+
+  .stats-card-value {
+    font-size: 2.5em;
+  }
+
+  .stats-card-title {
+    font-size: 1.2em;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (max-width: 991.98px) {
+  .main-content {
+    padding: 20px;
+  }
+
+  .content-box {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .animated-text-container {
+    position: static;
+    transform: translate(0, 0);
+    margin-bottom: 20px;
+  }
+
+  .us-map-container {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .sideBar {
+    width: 100%;
+  }
+
+  .stats-card-value {
+    font-size: 3em;
+  }
+
+  .stats-card-title {
+    font-size: 1.3em;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (max-width: 1199.98px) {
+  .main-content {
+    padding: 25px;
+  }
+
+  .content-box {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .animated-text-container {
+    position: static;
+    transform: translate(0, 0);
+    margin-bottom: 20px;
+  }
+
+  .us-map-container {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .sideBar {
+    width: 100%;
+  }
+
+  .stats-card-value {
+    font-size: 3.5em;
+  }
+
+  .stats-card-title {
+    font-size: 1.4em;
+  }
+}
+
+
+
+
+
+
+
+
