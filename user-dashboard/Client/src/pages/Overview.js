@@ -146,6 +146,7 @@ const Overview = () => {
           <div className="col-md-4">
             <label htmlFor="yearSelector">Select Year:</label>
             <select id="yearSelector" value={year} onChange={handleYearChange}>
+            <option value={2022}>2022</option>
               <option value={2023}>2023</option>
               <option value={2024}>2024</option>
               {/* Add more years as needed */}
@@ -199,22 +200,23 @@ const Overview = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-4 d-flex flex-column align-items-center justify-content-center content-box">
-            <p className="serving-text">Serving</p>
-            <p className="countries-served">
-              <span className="large-number">{stats.countriesServed}</span>
-              <span className="small-text">Countries</span>
-            </p>
-            <div className="globe-container">
-              <CanvasGlobe
-                width={265}
-                height={265}
-                landColor="#fff"
-                countryColor="#F0B323"
-                borderColor="#FFF"
-              />
-            </div>
-          </div>
+          <div className="col-md-4 d-flex flex-column align-items-start justify-content-center content-box">
+  <div className="serving-container">
+    <p className="serving-text">Serving</p>
+    <span className="large-number">{stats.countriesServed}</span>
+  </div>
+  <p className="countries-text">Countries</p>
+  <div className="globe-container">
+    <CanvasGlobe
+      width={265}
+      height={265}
+      landColor="#fff"
+      countryColor="#F0B323"
+      borderColor="#FFF"
+    />
+  </div>
+</div>
+
         </div>
         <div className="row mb-4">
           <div className="col-md-4">

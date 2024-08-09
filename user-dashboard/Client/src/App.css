@@ -50,7 +50,6 @@
   flex-direction: column;
   color: #041C2C;
   padding: 20px;
-  border-radius: 5px;
   max-width: 600px;
   text-align: left; /* Align text to the left */
   position: absolute; /* Position the container absolutely */
@@ -60,25 +59,36 @@
 }
 
 .animated-text-container h2 {
-  font-size: 1.5rem;
+  font-size: 15px;
   margin: 0;
 }
 
 .animated-text-container .large-number {
-  font-size: 4rem;
+  font-size: 45px;
   font-weight: bold;
   color: #4698CB;
   margin: 0;
   text-align: left; /* Align the large number to the left */
   width: 100%; /* Ensure it takes full width */
-  padding-left: 10px; /* Adjust padding to align with the text */
+  padding-left: 5px; /* Adjust padding to align with the text */
 }
 
 .animated-text-container .small-text {
-  font-size: 4rem;
+  font-size: 45px;
   font-weight: bold;
   color: #041C2C;
   margin: 0;
+}
+
+.col-md-4 .small-text {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #041C2C;
+  margin: 0;
+  position: relative;
+  left: -20%;
+  top: -20%;
+  width: 100%; /* Ensure it takes full width */
 }
 
 .animated-text {
@@ -95,48 +105,59 @@
 .stack-text span {
   display: block;
   text-align: left; /* Align text to the left */
-  font-size: 4rem;
+  font-size: 45px;
   font-weight: bold;
   color: #041C2C;
   width: 100%;
   margin: 0; /* Remove any default margins */
 }
 
+/* Container for Serving and Number */
+.serving-container {
+  display: flex;
+  align-items: center; /* Align Serving text and Number horizontally */
+  justify-content: flex-start;
+  margin-bottom: 10px; /* Adjust spacing between this line and Countries */
+}
+
+/* Styling for Serving text */
+.serving-text {
+  font-size: 2rem;      /* Adjust font size as needed */
+  font-weight: bold;    /* Bold weight */
+  color: #041C2C;       /* Set color */
+  margin-right: 10px;   /* Space between Serving and Number */
+  text-align: left;     /* Align text to the left */
+}
+
+/* Styling for Large Number */
+.countries-served .large-number {
+  font-size: 4rem;      /* Larger font size for the number */
+  font-weight: bold;    /* Bold weight */
+  color: #4698CB;       /* Set color */
+  margin: 0;            /* Remove default margin */
+  text-align: left;     /* Align number to the left */
+}
+
+/* Styling for Countries text */
+.countries-served .countries-text {
+  font-size: 3.5rem;    /* Adjust font size as needed */
+  font-weight: bold;    /* Bold weight */
+  color: #041C2C;       /* Set color */
+  margin-top: 0;        /* Adjust top margin */
+  left: 20%
+}
+
 .countries-served {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the left */
-  justify-content: center;
+  position: absolute;
+  top: 20%;
+  left:-20%;
   color: #041C2C;
+  font-size: 4rem;
   padding: 20px;
-  border-radius: 5px;
   max-width: 600px;
-  text-align: left; /* Align text to the left */
-}
-
-.countries-served .large-number {
-  font-size: 4rem;
-  font-weight: bold;
-  color: #4698CB;
-  margin: 0;
-  text-align: left; /* Align the large number to the left */
-  width: 100%; /* Ensure it takes full width */
-}
-
-.countries-served .small-text {
-  font-size: 4rem;
-  font-weight: bold;
-  color: #041C2C;
-  margin: 0;
-}
-
-.countries-served .serving-text {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #041C2C;
-  margin: 0;
-  text-align: left; /* Align text to the left */
-  width: 100%; /* Ensure it takes full width */
+  
 }
 
 @keyframes fadeIn {
@@ -266,9 +287,9 @@ p {
 
 .us-map-container svg {
   position: absolute;
-  top: 0;
+  top: 15%;
   left: 0;
-  width: 120%;
+  width: 95%;
   height: 100%;
   z-index: 5; /* Ensure SVG is properly layered */
 }
@@ -323,15 +344,25 @@ p {
   align-items: center;
   justify-content: center;
   width: 100%;
+  top: -10%;
   height: auto;
+  position: relative; /* Ensure positioning context for the shadow */
 }
 
-.large-image-globe {
-  width: 335px; /* Set the width of the globe */
-  height: 500px; /* Increased height to match content box */
-  z-index: 1; /* Ensure it doesn't interfere with other elements */
-  object-fit: contain; /* Ensure the image scales correctly within the container */
+.globe-container::after {
+  content: "";
+  position: absolute;
+  bottom: -20px; /* Position the shadow directly under the globe */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 55%; /* Set the width of the shadow */
+  height: 20px; /* Set the height of the shadow */
+  background: rgba(0, 0, 0, 0.5); /* Shadow color */
+  filter: blur(10px); /* Blur the shadow to make it soft */
+  border-radius: 50%; /* Make the shadow elliptical */
+  z-index: 1; /* Ensure the shadow appears underneath the globe */
 }
+
 
 .text-container {
   flex: 0 0 auto; /* Prevent the container from shrinking */
@@ -488,11 +519,5 @@ p {
     font-size: 1.4em;
   }
 }
-
-
-
-
-
-
 
 
