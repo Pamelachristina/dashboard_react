@@ -35,61 +35,49 @@ const Overview = () => {
         // Fetch total users
         const totalUsersResponse = await axiosInstance.get('/api/total-users', { params: { year } });
         const totalUsers = totalUsersResponse.data.totalusers;
-        console.log('Total users:', totalUsers); // Log the total users
 
         // Fetch on-site users
         const onSiteUsersResponse = await axiosInstance.get('/api/on-site-users', { params: { year } });
         const onSiteUsers = onSiteUsersResponse.data.onsiteusers;
-        console.log('On-site users:', onSiteUsers); // Log the on-site users
 
         // Fetch remote users
         const remoteUsersResponse = await axiosInstance.get('/api/remote-users', { params: { year } });
         const remoteUsers = remoteUsersResponse.data.remoteusers;
-        console.log('Remote users:', remoteUsers); // Log the remote users
 
         // Fetch total proposals
         const totalProposalsResponse = await axiosInstance.get('/api/total-proposals', { params: { year } });
         const totalProposals = totalProposalsResponse.data.totalproposals;
-        console.log('Total proposals:', totalProposals); // Log the total proposals
 
         // Fetch accepted proposals
         const acceptedProposalsResponse = await axiosInstance.get('/api/accepted-proposals', { params: { year } });
         const acceptedProposals = acceptedProposalsResponse.data.acceptedproposals;
-        console.log('Accepted proposals:', acceptedProposals); // Log the accepted proposals
 
         // Calculate acceptance rate
         const acceptanceRate = ((acceptedProposals / totalProposals) * 100).toFixed(2);
-        console.log('Acceptance rate:', acceptanceRate); // Log the acceptance rate
 
-        // Fetch minority institutions (example endpoint, adjust as needed)
+        // Fetch minority institutions
         const minorityInstitutionsResponse = await axiosInstance.get('/api/minority-institutions', { params: { year } });
         const minorityInstitutions = minorityInstitutionsResponse.data.minorityinstitutions;
-        console.log('Minority institutions:', minorityInstitutions); // Log the minority institutions
 
-        // Fetch companies (example endpoint, adjust as needed)
+        // Fetch companies
         const companiesResponse = await axiosInstance.get('/api/companies', { params: { year } });
         const companies = companiesResponse.data.companies;
-        console.log('Companies:', companies); // Log the companies
 
-        // Fetch states (example endpoint, adjust as needed)
+        // Fetch states
         const statesResponse = await axiosInstance.get('/api/states', { params: { year } });
         const states = statesResponse.data.states;
-        console.log('States:', states); // Log the states
 
-        // Fetch countries served (example endpoint, adjust as needed)
+        // Fetch countries served
         const countriesServedResponse = await axiosInstance.get('/api/countries-served', { params: { year } });
         const countriesServed = countriesServedResponse.data.countriesserved;
-        console.log('Countries served:', countriesServed); // Log the countries served
 
-         // Fetch publications
-         const publicationsResponse = await axiosInstance.get('/api/publications', { params: { year } });
-         const publications = publicationsResponse.data.publications;
-         console.log('Publications:', publications); // Log the publications
+        // Fetch publications
+        const publicationsResponse = await axiosInstance.get('/api/publications', { params: { year } });
+        const publications = publicationsResponse.data.publications;
 
         // Fetch state data for the USMap component
         const stateDataResponse = await axiosInstance.get('/api/state-data', { params: { year } });
         const stateData = stateDataResponse.data;
-        console.log('State data:', stateData); // Log the state data
 
         // Update state
         setStats({
@@ -141,8 +129,8 @@ const Overview = () => {
 
   return (
     <div className="main-content">
-      <div className="container-fluid">
-        <div className="row mb-4">
+      <div className="container-fluid overview-container">
+        <div className="row mb-3">
           <div className="col-md-4">
             <label htmlFor="yearSelector">Select Year:</label>
             <select id="yearSelector" value={year} onChange={handleYearChange}>
@@ -152,7 +140,7 @@ const Overview = () => {
             </select>
           </div>
         </div>
-        <div className="row mb-4">
+        <div className="row mb-3">
           <div className="col-md-4">
             <StatsCard title="Total Users" value={stats.totalUsers} />
           </div>
@@ -163,9 +151,9 @@ const Overview = () => {
             <StatsCard title="Remote Users" value={stats.remoteUsers} />
           </div>
         </div>
-        <div className="row mb-4">
+        <div className="row mb-3">
           <div className="col-md-8">
-            <div className="content-box" style={{ position: 'relative' }}>
+            <div className="content-box map-content-box">
               <div className="animated-text-container">
                 <h2>In fiscal year {year} we served:</h2>
                 <div
@@ -195,28 +183,30 @@ const Overview = () => {
                 </div>
               </div>
               <div className="us-map-container">
-                <USMap data={stateData} /> {/* Pass the state data to the USMap component */}
+                <USMap data={stateData} />
               </div>
             </div>
           </div>
-          <div className="col-md-4 d-flex flex-column align-items-center justify-content-center content-box">
-            <p className="serving-text">Serving</p>
-            <p className="countries-served">
-              <span className="large-number">{stats.countriesServed}</span>
-              <span className="small-text">Countries</span>
-            </p>
-            <div className="globe-container">
-              <CanvasGlobe
-                width={265}
-                height={265}
-                landColor="#fff"
-                countryColor="#F0B323"
-                borderColor="#FFF"
-              />
+          <div className="col-md-4">
+            <div className="content-box globe-content-box">
+              <p className="serving-text">Serving</p>
+              <p className="countries-served">
+                <span className="large-number">{stats.countriesServed}</span>
+                <span className="small-text">Countries</span>
+              </p>
+              <div className="globe-container">
+                <CanvasGlobe
+                  width={200}
+                  height={200}
+                  landColor="#fff"
+                  countryColor="#F0B323"
+                  borderColor="#FFF"
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div className="row mb-4">
+        <div className="row">
           <div className="col-md-4">
             <StatsCard title="Number of Proposals" value={stats.totalProposals} />
           </div>
@@ -233,7 +223,6 @@ const Overview = () => {
 };
 
 export default Overview;
-
 
 
 

@@ -1,3 +1,4 @@
+/* Existing styles */
 @keyframes dropDown {
   0% {
     transform: translateY(-100%);
@@ -45,18 +46,19 @@
 
 .animated-text-container {
   display: flex;
-  align-items: flex-start; /* Align items to the top */
+  align-items: flex-start;
   justify-content: center;
   flex-direction: column;
   color: #041C2C;
   padding: 20px;
   border-radius: 5px;
-  max-width: 600px;
-  text-align: left; /* Align text to the left */
-  position: absolute; /* Position the container absolutely */
-  top: 0; /* Align it to the top */
-  left: 0; /* Align it to the left */
-  transform: translate(0, 0); /* Adjust for positioning */
+  text-align: left;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 40%;
+  padding-right: 20px;
 }
 
 .animated-text-container h2 {
@@ -69,9 +71,9 @@
   font-weight: bold;
   color: #4698CB;
   margin: 0;
-  text-align: left; /* Align the large number to the left */
-  width: 100%; /* Ensure it takes full width */
-  padding-left: 10px; /* Adjust padding to align with the text */
+  text-align: left;
+  width: 100%;
+  padding-left: 10px;
 }
 
 .animated-text-container .small-text {
@@ -88,30 +90,30 @@
 .stack-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the left */
-  line-height: 1; /* Reduce the space between lines */
+  align-items: flex-start;
+  line-height: 1;
 }
 
 .stack-text span {
   display: block;
-  text-align: left; /* Align text to the left */
+  text-align: left;
   font-size: 4rem;
   font-weight: bold;
   color: #041C2C;
   width: 100%;
-  margin: 0; /* Remove any default margins */
+  margin: 0;
 }
 
 .countries-served {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the left */
+  align-items: flex-start;
   justify-content: center;
   color: #041C2C;
   padding: 20px;
   border-radius: 5px;
   max-width: 600px;
-  text-align: left; /* Align text to the left */
+  text-align: left;
 }
 
 .countries-served .large-number {
@@ -119,8 +121,8 @@
   font-weight: bold;
   color: #4698CB;
   margin: 0;
-  text-align: left; /* Align the large number to the left */
-  width: 100%; /* Ensure it takes full width */
+  text-align: left;
+  width: 100%;
 }
 
 .countries-served .small-text {
@@ -135,8 +137,8 @@
   font-weight: bold;
   color: #041C2C;
   margin: 0;
-  text-align: left; /* Align text to the left */
-  width: 100%; /* Ensure it takes full width */
+  text-align: left;
+  width: 100%;
 }
 
 @keyframes fadeIn {
@@ -156,7 +158,7 @@
 body {
   margin: 0;
   font-family: 'Fira Sans', sans-serif;
-  overflow: hidden; /* prevents scrolling */
+  overflow: hidden;
 }
 
 .header {
@@ -186,32 +188,32 @@ p {
 
 .sideBar {
   width: 250px;
-  background-color: #f8f9fa; /* Adjust as needed */
-  border-right: 1px solid #ddd; /* Optional border */
+  background-color: #f8f9fa;
+  border-right: 1px solid #ddd;
 }
 
 .sideBar ul {
-  list-style-type: none; /* Remove bullet points */
-  padding-left: 0; /* Remove default padding */
+  list-style-type: none;
+  padding-left: 0;
 }
 
 .sideBar .nav-link {
   display: flex;
   align-items: center;
-  color: #000; /* Adjust link color as needed */
-  text-decoration: none; /* Remove underline */
-  padding: 10px 0; /* Add some padding for better spacing */
+  color: #000;
+  text-decoration: none;
+  padding: 10px 0;
 }
 
 .sideBar .nav-link:hover {
-  color: #F0B323; /* Optional: Change color on hover */
+  color: #F0B323;
 }
 
 /* Style for the stats cards */
 .stats-card {
-  background-color: #f8f9fa; /* Adjust as needed */
+  background-color: #f8f9fa;
   padding: 20px;
-  text-align: center; /* Center the text */
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -220,35 +222,46 @@ p {
 }
 
 .stats-card-title {
-  font-size: 1.5em; /* Adjust the font size */
+  font-size: 1.5em;
   font-weight: 300;
   margin-bottom: -15px;
 }
 
 .stats-card-value {
-  font-size: 4em; /* Adjust the font size */
+  font-size: 4em;
   font-weight: bolder;
-  color: #041C2C; /* Adjust the color if needed */
+  color: #041C2C;
 }
 
+/* Updated styles */
 .main-content {
   flex-grow: 1;
-  background-color: #4698CB; /* Background color for main content */
+  background-color: #4698CB;
   padding: 20px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
+}
+
+.overview-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .content-box {
   background-color: #C4C4C4;
   padding: 20px;
-  text-align: center; /* Center the text */
+  text-align: center;
   display: flex;
-  flex-direction: row; /* Use flexbox for alignment */
-  justify-content: flex-start; /* Align items to the left */
-  align-items: flex-start; /* Align items to the top */
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  height: 700px; /* Increased height */
+  height: 500px;
   position: relative;
+  margin-bottom: 20px;
 }
 
 .content-box-small {
@@ -256,43 +269,67 @@ p {
 }
 
 .us-map-container {
-  flex: 0 0 auto; /* Prevent the map from resizing */
-  position: absolute;
+  flex: 0 0 auto;
+  width: 100%;
+  height: 100%;
+  position: relative;
   right: 0;
-  width: 750px; /* Set the desired width */
-  height: 620px; /* Set the desired height */
-  overflow: hidden;
 }
 
 .us-map-container svg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 120%;
-  height: 100%;
-  z-index: 5; /* Ensure SVG is properly layered */
+  top: -10%; /* Adjust this value to move the map up or down */
+  left: 30%; /* Adjust this value to move the map left or right */
+  width: 140%; /* Increase to make the map larger */
+  height: 140%; /* Increase to make the map larger */
+  z-index: 5;
 }
 
+/* Adjust globe container */
+.globe-content-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 500px;
+}
+
+.globe-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70%;
+}
+
+.large-image-globe {
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+/* Popup styles */
 .popup {
   position: absolute;
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px; /* Consistent padding around the popup */
+  padding: 15px;
   pointer-events: none;
   transform: translate(-50%, -100%);
   transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 10; /* Ensure popup appears above other elements */
-  max-width: 250px; /* Adjust width */
-  white-space: normal; /* Ensure text wraps */
+  z-index: 10;
+  max-width: 250px;
+  white-space: normal;
 }
 
 .popup p {
-  margin: 0; /* Remove default margin */
-  line-height: 1.2; /* Adjust line height to tighten space */
+  margin: 0;
+  line-height: 1.2;
 }
 
 .popup .line1 {
-  margin-bottom: 1px; /* Adjust as necessary to control space between lines */
+  margin-bottom: 1px;
 }
 
 .popup .number {
@@ -301,51 +338,34 @@ p {
 }
 
 .navbar-nav {
-  list-style-type: none; /* Remove bullet points */
-  padding-left: 0; /* Remove default padding */
+  list-style-type: none;
+  padding-left: 0;
 }
 
 .navbar-nav .nav-item {
-  margin-right: 15px; /* Optional: Add some space between items */
+  margin-right: 15px;
 }
 
 .navbar-nav .nav-link {
-  color: #000; /* Adjust link color as needed */
-  text-decoration: none; /* Remove underline */
+  color: #000;
+  text-decoration: none;
 }
 
 .navbar-nav .nav-link:hover {
-  color: #007bff; /* Optional: Change color on hover */
-}
-
-.globe-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: auto;
-}
-
-.large-image-globe {
-  width: 335px; /* Set the width of the globe */
-  height: 500px; /* Increased height to match content box */
-  z-index: 1; /* Ensure it doesn't interfere with other elements */
-  object-fit: contain; /* Ensure the image scales correctly within the container */
+  color: #007bff;
 }
 
 .text-container {
-  flex: 0 0 auto; /* Prevent the container from shrinking */
-  max-width: 200px; /* Set a max width for the text container */
-  text-align: left; /* Align text to the left */
+  flex: 0 0 auto;
+  max-width: 200px;
+  text-align: left;
 }
 
 .display-4-small {
-  font-size: 1.5rem !important; /* Adjust the size as needed */
+  font-size: 1.5rem !important;
 }
 
 /* Media Queries for Responsive Design */
-
-/* Small devices (landscape phones, 576px and up) */
 @media (max-width: 575.98px) {
   .main-content {
     padding: 10px;
@@ -357,15 +377,14 @@ p {
   }
 
   .animated-text-container {
-    position: static;
-    transform: translate(0, 0);
+    width: 100%;
+    padding-right: 0;
     margin-bottom: 20px;
   }
 
   .us-map-container {
-    position: static;
     width: 100%;
-    height: auto;
+    height: 300px;
   }
 
   .sideBar {
@@ -381,7 +400,6 @@ p {
   }
 }
 
-/* Medium devices (tablets, 768px and up) */
 @media (max-width: 767.98px) {
   .main-content {
     padding: 15px;
@@ -393,15 +411,14 @@ p {
   }
 
   .animated-text-container {
-    position: static;
-    transform: translate(0, 0);
+    width: 100%;
+    padding-right: 0;
     margin-bottom: 20px;
   }
 
   .us-map-container {
-    position: static;
     width: 100%;
-    height: auto;
+    height: 300px;
   }
 
   .sideBar {
@@ -417,7 +434,6 @@ p {
   }
 }
 
-/* Large devices (desktops, 992px and up) */
 @media (max-width: 991.98px) {
   .main-content {
     padding: 20px;
@@ -429,15 +445,14 @@ p {
   }
 
   .animated-text-container {
-    position: static;
-    transform: translate(0, 0);
+    width: 100%;
+    padding-right: 0;
     margin-bottom: 20px;
   }
 
   .us-map-container {
-    position: static;
     width: 100%;
-    height: auto;
+    height: 300px;
   }
 
   .sideBar {
@@ -451,9 +466,16 @@ p {
   .stats-card-title {
     font-size: 1.3em;
   }
+
+  .globe-content-box {
+    height: auto;
+  }
+
+  .globe-container {
+    height: 300px;
+  }
 }
 
-/* Extra large devices (large desktops, 1200px and up) */
 @media (max-width: 1199.98px) {
   .main-content {
     padding: 25px;
@@ -465,15 +487,14 @@ p {
   }
 
   .animated-text-container {
-    position: static;
-    transform: translate(0, 0);
+    width: 100%;
+    padding-right: 0;
     margin-bottom: 20px;
   }
 
   .us-map-container {
-    position: static;
     width: 100%;
-    height: auto;
+    height: 300px;
   }
 
   .sideBar {
@@ -488,9 +509,6 @@ p {
     font-size: 1.4em;
   }
 }
-
-
-
 
 
 
